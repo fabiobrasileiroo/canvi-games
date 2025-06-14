@@ -58,7 +58,10 @@ export function ModeSelection({ onSelectMode }: ModeSelectionProps) {
                 onClick={() => onSelectMode("normal")}
               >
                 <div className="flex flex-col items-center">
-                  <User size={100} className="mb-8" />
+                  {/* <User size={100} className="mb-8" /> */}
+                  <div className="">
+                    <Image src={"/assets/user-01.svg"} className="mb-8" width={100} height={100} alt="user" />
+                  </div>
                   <span>Modo Normal</span>
                   <span className="text-lg mt-4 opacity-90">Jogue sozinho</span>
                 </div>
@@ -71,7 +74,8 @@ export function ModeSelection({ onSelectMode }: ModeSelectionProps) {
                 onClick={() => onSelectMode("duelo")}
               >
                 <div className="flex flex-col items-center">
-                  <Users size={100} className="mb-8" />
+                  {/* <Users size={100} className="mb-8" /> */}
+                  <Image src={"/assets/user-02.svg"} className="mb-8" width={185} height={185} alt="user" />
                   <span>Modo Duelo</span>
                   <span className="text-lg mt-4 opacity-90">Jogue contra um amigo</span>
                 </div>

@@ -14,7 +14,7 @@ interface MemoryCardProps {
 }
 
 export function MemoryCard({ symbol, index, isOpened, isMatched, isWrongPair, onClick }: MemoryCardProps) {
-  const isFlipped = isOpened || isMatched
+  const isFlipped = !isOpened || isMatched
 
   const [showErrorAnimation, setShowErrorAnimation] = useState(false)
 

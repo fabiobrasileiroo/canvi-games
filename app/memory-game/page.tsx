@@ -104,7 +104,7 @@ export default function MemoryGame() {
   const [soundEnabled, setSoundEnabled] = useState(true)
   const [enableRanking, setEnableRanking] = useState(true)
   const [showQrCodes, setShowQrCodes] = useState(true)
-  const [autoStart, setAutoStart] = useState(true) // Novo estado para início automático
+  const [autoStart, setAutoStart] = useState(true)
   const [rankings, setRankings] = useState<RankingEntry[]>([])
   const [winEffectActive, setWinEffectActive] = useState(false)
   const [activeTab, setActiveTab] = useState<"game" | "settings" | "ranking">("game")
@@ -118,7 +118,7 @@ export default function MemoryGame() {
     description: "",
     confirmText: "",
     isSuccess: false,
-    onConfirm: () => {},
+    onConfirm: () => { },
   })
 
   // Sound effects com volume reduzido para música de fundo
@@ -131,7 +131,7 @@ export default function MemoryGame() {
     play: playMusic,
     stop: stopMusic,
     isPlaying: isMusicPlaying,
-  } = useSound("/sounds/background-music.mp3", true, 0.3) // Volume reduzido para 30%
+  } = useSound("/sounds/background-music.mp3", true, 0.3)
 
   const confettiRef = useRef<HTMLDivElement>(null)
 
@@ -155,7 +155,7 @@ export default function MemoryGame() {
     const newArray = [...array]
     for (let i = newArray.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1))
-      ;[newArray[i], newArray[j]] = [newArray[j], newArray[i]]
+        ;[newArray[i], newArray[j]] = [newArray[j], newArray[i]]
     }
     return newArray
   }
@@ -273,25 +273,31 @@ export default function MemoryGame() {
       const [first, second] = newOpened
 
       if (cards[first] === cards[second]) {
+        // Par correto
         setTimeout(() => {
           playSound(playMatch)
           setMatched((prev) => [...prev, first, second])
           setOpened([])
         }, 600)
       } else {
-        // Set wrong pair immediately
-        setWrongPair([first, second])
+        // Par incorreto - sequência melhorada
 
-        // Play error sound after a short delay
+        // 1. Primeiro, deixa ver as cartas por 800ms
+        setTimeout(() => {
+          // 2. Marca como par errado para iniciar efeito de erro
+          setWrongPair([first, second])
+        }, 800)
+
+        // 3. Toca som de erro após mostrar as cartas
         setTimeout(() => {
           playSound(playNoMatch)
-        }, 200)
+        }, 1000)
 
-        // Reset everything after error animation
+        // 4. Reset completo após efeito de erro
         setTimeout(() => {
           setWrongPair([])
           setOpened([])
-        }, 1000) // Reduced from 1200 to 1000
+        }, 1800) // Tempo total: 800ms (ver cartas) + 800ms (efeito erro) + 200ms (buffer)
       }
     }
   }
@@ -403,38 +409,6 @@ export default function MemoryGame() {
       // Mostrar resultado do duelo
       setShowDuelResults(true)
     }
-  }
-
-  // Show duel results
-  const showDuelResultsDialog = () => {
-    const player1 = duelPlayers[0]
-    const player2 = duelPlayers[1]
-
-    let winner = ""
-    let description = ""
-
-    if (player1.score > player2.score) {
-      winner = `Jogador 1 (${player1.team === "garantido" ? "Boi Garantido" : "Boi Caprichoso"})`
-      description = `${winner} venceu com ${player1.score} pontos!`
-    } else if (player2.score > player1.score) {
-      winner = `Jogador 2 (${player2.team === "garantido" ? "Boi Garantido" : "Boi Caprichoso"})`
-      description = `${winner} venceu com ${player2.score} pontos!`
-    } else {
-      winner = "Empate!"
-      description = `Ambos jogadores fizeram ${player1.score} pontos!`
-    }
-
-    setAlertConfig({
-      title: `🏆 Resultado do Duelo`,
-      description: `${description}\n\nJogador 1: ${player1.score} pts (${player1.moves} movimentos)\nJogador 2: ${player2.score} pts (${player2.moves} movimentos)`,
-      confirmText: "Novo Jogo",
-      isSuccess: true,
-      onConfirm: () => {
-        setShowDuelResults(false)
-        setShowModeSelect(true)
-      },
-    })
-    setShowAlert(true)
   }
 
   // End game
@@ -575,13 +549,6 @@ export default function MemoryGame() {
       endGame(false)
     }
   }, [matched, gameActive])
-
-  // Show duel results when both players finish
-  useEffect(() => {
-    if (showDuelResults) {
-      showDuelResultsDialog()
-    }
-  }, [showDuelResults])
 
   // Load rankings from localStorage
   useEffect(() => {
@@ -940,11 +907,11 @@ export default function MemoryGame() {
         </AlertDialogContent>
       </AlertDialog>
 
-          {/* Duel results dialog */}
+      {/* Duel results dialog - Versão visual melhorada */}
       <AlertDialog open={showDuelResults} onOpenChange={setShowDuelResults}>
-        <AlertDialogContent>
+        <AlertDialogContent className="max-w-[900px]">
           <AlertDialogHeader>
-            <AlertDialogTitle>Resultado do Duelo!</AlertDialogTitle>
+            <AlertDialogTitle className="text-5xl text-center">🏆 Resultado do Duelo!</AlertDialogTitle>
             <AlertDialogDescription>
               <div className="space-y-4 mt-4">
                 <div className="grid grid-cols-2 gap-4">
@@ -956,8 +923,8 @@ export default function MemoryGame() {
                           duelPlayers[0]?.team === "garantido" ? "bg-red-100" : "bg-blue-100",
                         )}
                       >
-                        <h3 className="font-bold text-lg mb-2">Jogador 1</h3>
-                        <div className="flex items-center mb-2">
+                        <h3 className="font-bold text-3xl mb-2">Jogador 1</h3>
+                        <div className="flex items-center mb-2 text-xl">
                           <Image
                             src={
                               duelPlayers[0]?.team === "garantido"
@@ -965,20 +932,20 @@ export default function MemoryGame() {
                                 : "/assets/boi-azul-caprichoso.svg"
                             }
                             alt={duelPlayers[0]?.team === "garantido" ? "Boi Garantido" : "Boi Caprichoso"}
-                            width={30}
-                            height={30}
+                            width={40}
+                            height={40}
                             className="mr-2"
                           />
                           <span>{duelPlayers[0]?.team === "garantido" ? "Garantido" : "Caprichoso"}</span>
                         </div>
-                        <div className="space-y-1 text-sm">
-                          <div>
-                            {/* Pontuação: <span className="font-bold">{duelPlayers[0]?.score}</span> */}
+                        <div className="space-y-1 ">
+                          <div className="text-xl">
+                            Pontuação: <span className=" font-bold">{duelPlayers[0]?.score}</span>
                           </div>
-                          <div>
+                          <div className="text-xl">
                             Movimentos: <span className="font-bold">{duelPlayers[0]?.moves}</span>
                           </div>
-                          <div>
+                          <div className="text-xl">
                             Tempo: <span className="font-bold">{formatTime(duelPlayers[0]?.time || 0)}</span>
                           </div>
                         </div>
@@ -990,8 +957,8 @@ export default function MemoryGame() {
                           duelPlayers[1]?.team === "garantido" ? "bg-red-100" : "bg-blue-100",
                         )}
                       >
-                        <h3 className="font-bold text-lg mb-2">Jogador 2</h3>
-                        <div className="flex items-center mb-2">
+                        <h3 className="font-bold mb-2 text-3xl">Jogador 2</h3>
+                        <div className="flex items-center mb-2 text-xl">
                           <Image
                             src={
                               duelPlayers[1]?.team === "garantido"
@@ -999,15 +966,15 @@ export default function MemoryGame() {
                                 : "/assets/boi-azul-caprichoso.svg"
                             }
                             alt={duelPlayers[1]?.team === "garantido" ? "Boi Garantido" : "Boi Caprichoso"}
-                            width={30}
-                            height={30}
+                            width={40}
+                            height={40}
                             className="mr-2"
                           />
                           <span>{duelPlayers[1]?.team === "garantido" ? "Garantido" : "Caprichoso"}</span>
                         </div>
-                        <div className="space-y-1 text-sm">
+                        <div className="space-y-1 text-xl">
                           <div>
-                            {/* Pontuação: <span className="font-bold">{duelPlayers[1]?.score}</span> */}
+                            Pontuação: <span className="font-bold">{duelPlayers[1]?.score}</span>
                           </div>
                           <div>
                             Movimentos: <span className="font-bold">{duelPlayers[1]?.moves}</span>
@@ -1021,13 +988,19 @@ export default function MemoryGame() {
                   )}
                 </div>
 
-                <div className="mt-6 p-4 bg-yellow-100 rounded-lg text-center">
-                  <h3 className="font-bold text-xl mb-2">Vencedor</h3>
+                <div className="mt-6 p-4 bg-green-500 rounded-lg text-center">
+                  <h3 className="font-bold text-white text-6xl mb-2">🎉 Vencedor</h3>
                   {duelPlayers.length > 1 && (
                     <>
                       {duelPlayers[0]?.score > duelPlayers[1]?.score ? (
                         <div className="flex flex-col items-center">
-                          <span className="text-lg font-bold">Jogador 1</span>
+                          {/* <span className="text-lg font-bold">Jogador 1</span> */}
+                          <Image
+                            src={"/assets/games/ganhador/jogador-1-ganhou.svg"}
+                            width={400}
+                            height={400}
+                            alt="jogador 1"
+                          />
                           <div className="flex items-center mt-2">
                             <Image
                               src={
@@ -1040,14 +1013,21 @@ export default function MemoryGame() {
                               height={40}
                               className="mr-2"
                             />
-                            <span className="text-lg">
+                            <span className="text-2xl text-white">
                               Boi {duelPlayers[0]?.team === "garantido" ? "Garantido" : "Caprichoso"}
                             </span>
                           </div>
+                          <span className="text-xl mt-1 text-gray-100">{duelPlayers[0]?.score} pontos</span>
                         </div>
                       ) : duelPlayers[1]?.score > duelPlayers[0]?.score ? (
                         <div className="flex flex-col items-center">
-                          <span className="text-lg font-bold">Jogador 2</span>
+                          {/* <span className="text-lg font-bold">Jogador 2</span> */}
+                           <Image
+                            src={"/assets/games/ganhador/jogador-2-ganhou.svg"}
+                            width={400}
+                            height={400}
+                            alt="jogador 2"
+                          />
                           <div className="flex items-center mt-2">
                             <Image
                               src={
@@ -1060,13 +1040,19 @@ export default function MemoryGame() {
                               height={40}
                               className="mr-2"
                             />
-                            <span className="text-lg">
+                            <span className="text-2xl text-white">
                               Boi {duelPlayers[1]?.team === "garantido" ? "Garantido" : "Caprichoso"}
                             </span>
                           </div>
+                          <span className="text-lg mt-1 text-gray-100">{duelPlayers[1]?.score} pontos</span>
                         </div>
                       ) : (
-                        <span className="text-lg font-bold">Empate!</span>
+                        <div className="flex flex-col items-center">
+                          <span className="text-4xl font-bold">🤝 Empate!</span>
+                          <span className="text-2xl mt-1 text-gray-600">
+                            Ambos fizeram {duelPlayers[0]?.score} pontos
+                          </span>
+                        </div>
                       )}
                     </>
                   )}
@@ -1076,9 +1062,10 @@ export default function MemoryGame() {
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogAction
+              className="text-lg px-6 py-3"
               onClick={() => {
                 setShowDuelResults(false)
-                setShowModeSelect(true) // Alterado para voltar à seleção de modo
+                setShowModeSelect(true)
               }}
             >
               Jogar Novamente
