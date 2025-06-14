@@ -31,7 +31,7 @@ export function MemoryCard({ symbol, index, isOpened, isMatched, isWrongPair, on
 
   return (
     <motion.div
-      className="relative h-20 w-20 sm:h-28 sm:w-28 lg:h-32 lg:w-32 rounded-lg cursor-pointer will-change-transform"
+      className="relative h-24 w-24 sm:h-32 sm:w-32 lg:h-40 lg:w-40 rounded-lg cursor-pointer will-change-transform"
       onClick={onClick}
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
@@ -92,11 +92,11 @@ export function MemoryCard({ symbol, index, isOpened, isMatched, isWrongPair, on
           >
             <Image
               src="/assets/games/back-card.svg"
-              width={90}
-              height={90}
+              width={110}
+              height={110}
               alt="back-card"
               priority
-              // className="w-14 h-14 sm:w-[85px] sm:h-[85px] lg:w-[90px] lg:h-[90px]"
+              className="w-16 h-16 sm:w-[100px] sm:h-[100px] lg:w-[110px] lg:h-[110px]"
             />
           </motion.div>
         </div>
@@ -129,9 +129,9 @@ export function MemoryCard({ symbol, index, isOpened, isMatched, isWrongPair, on
             <Image
               src={`/assets/${symbol}`}
               alt={symbol}
-              width={70}
-              height={70}
-              // className="object-contain w-12 h-12 sm:w-[65px] sm:h-[65px] lg:w-[70px] lg:h-[70px]"
+              width={85}
+              height={85}
+              className="object-contain w-14 h-14 sm:w-[80px] sm:h-[80px] lg:w-[85px] lg:h-[85px]"
               priority
             />
           </motion.div>

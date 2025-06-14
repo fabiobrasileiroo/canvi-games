@@ -28,17 +28,17 @@ export function ModeSelection({ onSelectMode }: ModeSelectionProps) {
 
       {/* Logo */}
       <motion.div
-        className="relative z-10 flex justify-center mb-8 w-full max-w-[800px]"
+        className="relative z-10 flex justify-center mb-10 w-full max-w-[1000px]"
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
       >
         <Image
           src="/assets/games/jogo-da-memoria.svg"
-          width={400}
-          height={120}
+          width={500}
+          height={150}
           alt="Jogo da memória"
-          className="mb-6"
+          className="mb-8"
         />
       </motion.div>
 
@@ -48,32 +48,32 @@ export function ModeSelection({ onSelectMode }: ModeSelectionProps) {
         transition={{ duration: 0.5, delay: 0.2 }}
         className="relative z-10"
       >
-        <Card className="p-8 mb-8 shadow-2xl max-w-[800px] w-full bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl">
-          <h1 className="text-4xl font-bold text-center mb-8 text-white">Escolha o Modo de Jogo</h1>
+        <Card className="p-10 mb-10 shadow-2xl max-w-[1000px] w-full bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl">
+          <h1 className="text-5xl font-bold text-center mb-10 text-white">Escolha o Modo de Jogo</h1>
 
-          <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="h-56 w-full sm:w-1/2">
+          <div className="flex flex-col sm:flex-row gap-8 justify-center">
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="h-64 w-full sm:w-1/2">
               <Button
-                className="h-full w-full bg-green-600/80 hover:bg-green-700/90 backdrop-blur-sm text-white text-2xl rounded-xl border border-green-500/30 transition-all duration-300"
+                className="h-full w-full bg-green-600/80 hover:bg-green-700/90 backdrop-blur-sm text-white text-3xl rounded-xl border border-green-500/30 transition-all duration-300"
                 onClick={() => onSelectMode("normal")}
               >
                 <div className="flex flex-col items-center">
-                  <User size={80} className="mb-6" />
+                  <User size={100} className="mb-8" />
                   <span>Modo Normal</span>
-                  <span className="text-base mt-3 opacity-90">Jogue sozinho</span>
+                  <span className="text-lg mt-4 opacity-90">Jogue sozinho</span>
                 </div>
               </Button>
             </motion.div>
 
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="h-56 w-full sm:w-1/2">
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="h-64 w-full sm:w-1/2">
               <Button
-                className="h-full w-full bg-purple-600/80 hover:bg-purple-700/90 backdrop-blur-sm text-white text-2xl rounded-xl border border-purple-500/30 transition-all duration-300"
+                className="h-full w-full bg-purple-600/80 hover:bg-purple-700/90 backdrop-blur-sm text-white text-3xl rounded-xl border border-purple-500/30 transition-all duration-300"
                 onClick={() => onSelectMode("duelo")}
               >
                 <div className="flex flex-col items-center">
-                  <Users size={80} className="mb-6" />
+                  <Users size={100} className="mb-8" />
                   <span>Modo Duelo</span>
-                  <span className="text-base mt-3 opacity-90">Jogue contra um amigo</span>
+                  <span className="text-lg mt-4 opacity-90">Jogue contra um amigo</span>
                 </div>
               </Button>
             </motion.div>
