@@ -20,9 +20,11 @@ export function MemoryCard({ symbol, index, isOpened, isMatched, isWrongPair, on
   // Controla quando mostrar a animação de erro
   useEffect(() => {
     if (isWrongPair) {
+      setShowErrorAnimation(true)
+      // Reset error animation after showing it
       const timer = setTimeout(() => {
-        setShowErrorAnimation(true)
-      }, 800) // Tempo para ver o símbolo antes de virar de volta
+        setShowErrorAnimation(false)
+      }, 800) // Shorter duration to prevent blocking
       return () => clearTimeout(timer)
     } else {
       setShowErrorAnimation(false)
@@ -42,13 +44,18 @@ export function MemoryCard({ symbol, index, isOpened, isMatched, isWrongPair, on
       animate={{
         opacity: 1,
         scale: 1,
+        // Animação de tremor mais suave quando erro
         ...(showErrorAnimation && {
-          x: [0, -4, 4, -4, 4, 0],
+          x: [0, -3, 3, -3, 3, -2, 2, -1, 1, 0],
+          transition: {
+            duration: 0.6,
+            ease: "easeInOut",
+          },
         }),
       }}
       transition={{
         type: "tween",
-        duration: showErrorAnimation ? 0.5 : 0.25,
+        duration: 0.25,
         delay: index * 0.02,
         ease: "easeOut",
       }}
@@ -61,10 +68,10 @@ export function MemoryCard({ symbol, index, isOpened, isMatched, isWrongPair, on
       <motion.div
         className="relative w-full h-full"
         animate={{
-          rotateY: isFlipped && !showErrorAnimation ? 180 : 0,
+          rotateY: isFlipped && !isWrongPair ? 180 : 0,
         }}
         transition={{
-          duration: 0.4,
+          duration: 0.3,
           ease: "easeInOut",
         }}
         style={{
@@ -74,7 +81,7 @@ export function MemoryCard({ symbol, index, isOpened, isMatched, isWrongPair, on
         {/* Verso da carta (lado que mostra quando não está virada) */}
         <div
           className={cn(
-            "absolute inset-0 rounded-lg flex items-center justify-center",
+            "absolute inset-0 rounded-lg flex items-center justify-center transition-colors duration-300",
             showErrorAnimation ? "bg-[#fe6536]" : "bg-[#a20d96]",
           )}
           style={{
@@ -83,8 +90,8 @@ export function MemoryCard({ symbol, index, isOpened, isMatched, isWrongPair, on
         >
           <motion.div
             animate={{
-              opacity: showErrorAnimation ? 0 : 1,
-              scale: showErrorAnimation ? 0.3 : 1,
+              opacity: showErrorAnimation ? 0.3 : 1,
+              scale: showErrorAnimation ? 0.8 : 1,
             }}
             transition={{
               duration: 0.3,
@@ -104,7 +111,7 @@ export function MemoryCard({ symbol, index, isOpened, isMatched, isWrongPair, on
         {/* Frente da carta (lado que mostra quando está virada) */}
         <div
           className={cn(
-            "absolute inset-0 rounded-lg flex items-center justify-center",
+            "absolute inset-0 rounded-lg flex items-center justify-center transition-colors duration-300",
             isMatched && "bg-[#4eea68]",
             isOpened && !isMatched && !showErrorAnimation && "bg-[#670c5f]",
             showErrorAnimation && "bg-[#fe6536]",
@@ -121,18 +128,21 @@ export function MemoryCard({ symbol, index, isOpened, isMatched, isWrongPair, on
               scale: isFlipped ? 1 : 0.3,
             }}
             transition={{
-              delay: isFlipped ? 0.2 : 0,
-              duration: 0.3,
+              delay: isFlipped ? 0.15 : 0, // Delay menor para flip mais rápido
+              duration: 0.25,
               ease: "easeOut",
             }}
           >
             <Image
-              src={symbol === "cracha-pix.svg" ? `/assets/${symbol.replace('cracha-pix.svg','cracha-pix.png')}`: `/assets/${symbol}`}
+              src={
+                symbol === "cracha-pix.svg"
+                  ? `/assets/${symbol.replace("cracha-pix.svg", "cracha-pix.png")}`
+                  : `/assets/${symbol}`
+              }
               alt={symbol}
               width={100}
               height={100}
               draggable="false"
-        
               priority
             />
           </motion.div>

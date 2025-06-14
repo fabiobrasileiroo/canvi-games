@@ -104,6 +104,7 @@ export default function MemoryGame() {
   const [soundEnabled, setSoundEnabled] = useState(true)
   const [enableRanking, setEnableRanking] = useState(true)
   const [showQrCodes, setShowQrCodes] = useState(true)
+  const [autoStart, setAutoStart] = useState(true) // Novo estado para início automático
   const [rankings, setRankings] = useState<RankingEntry[]>([])
   const [winEffectActive, setWinEffectActive] = useState(false)
   const [activeTab, setActiveTab] = useState<"game" | "settings" | "ranking">("game")
@@ -117,16 +118,20 @@ export default function MemoryGame() {
     description: "",
     confirmText: "",
     isSuccess: false,
-    onConfirm: () => { },
+    onConfirm: () => {},
   })
 
-  // Sound effects
+  // Sound effects com volume reduzido para música de fundo
   const { play: playFlip } = useSound("/sounds/flip.mp3")
   const { play: playMatch } = useSound("/sounds/arcade-bonus-cartas-par.wav")
-  const { play: playNoMatch } = useSound("/sounds/wrong-card.mp3")
+  const { play: playNoMatch } = useSound("/sounds/wrong-card.wav")
   const { play: playWin } = useSound("/sounds/game-win-2016.wav")
   const { play: playLose } = useSound("/sounds/lose.mp3")
-  const { play: playMusic, stop: stopMusic, isPlaying: isMusicPlaying } = useSound("/sounds/background-music.mp3", true)
+  const {
+    play: playMusic,
+    stop: stopMusic,
+    isPlaying: isMusicPlaying,
+  } = useSound("/sounds/background-music.mp3", true, 0.3) // Volume reduzido para 30%
 
   const confettiRef = useRef<HTMLDivElement>(null)
 
@@ -150,7 +155,7 @@ export default function MemoryGame() {
     const newArray = [...array]
     for (let i = newArray.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1))
-        ;[newArray[i], newArray[j]] = [newArray[j], newArray[i]]
+      ;[newArray[i], newArray[j]] = [newArray[j], newArray[i]]
     }
     return newArray
   }
@@ -169,10 +174,23 @@ export default function MemoryGame() {
     setMoves(0)
     setTimeElapsed(0)
     setTimeLeft(getTimeForDifficulty(difficulty))
-    setGameActive(true)
     setWinEffectActive(false)
     setShowTeamSelect(false)
 
+    // Só inicia o jogo automaticamente se autoStart estiver ativado
+    if (autoStart) {
+      setGameActive(true)
+      if (musicEnabled && !isMusicPlaying) {
+        playMusic()
+      }
+    } else {
+      setGameActive(false)
+    }
+  }
+
+  // Função para iniciar o jogo manualmente
+  const startGame = () => {
+    setGameActive(true)
     if (musicEnabled && !isMusicPlaying) {
       playMusic()
     }
@@ -259,15 +277,21 @@ export default function MemoryGame() {
           playSound(playMatch)
           setMatched((prev) => [...prev, first, second])
           setOpened([])
-        }, 500)
+        }, 600)
       } else {
+        // Set wrong pair immediately
         setWrongPair([first, second])
-        playSound(playNoMatch)
 
+        // Play error sound after a short delay
+        setTimeout(() => {
+          playSound(playNoMatch)
+        }, 200)
+
+        // Reset everything after error animation
         setTimeout(() => {
           setWrongPair([])
           setOpened([])
-        }, 1000)
+        }, 1000) // Reduced from 1200 to 1000
       }
     }
   }
@@ -376,8 +400,41 @@ export default function MemoryGame() {
       setCurrentDuelPlayer(1)
       setShowTeamSelect(true)
     } else {
+      // Mostrar resultado do duelo
       setShowDuelResults(true)
     }
+  }
+
+  // Show duel results
+  const showDuelResultsDialog = () => {
+    const player1 = duelPlayers[0]
+    const player2 = duelPlayers[1]
+
+    let winner = ""
+    let description = ""
+
+    if (player1.score > player2.score) {
+      winner = `Jogador 1 (${player1.team === "garantido" ? "Boi Garantido" : "Boi Caprichoso"})`
+      description = `${winner} venceu com ${player1.score} pontos!`
+    } else if (player2.score > player1.score) {
+      winner = `Jogador 2 (${player2.team === "garantido" ? "Boi Garantido" : "Boi Caprichoso"})`
+      description = `${winner} venceu com ${player2.score} pontos!`
+    } else {
+      winner = "Empate!"
+      description = `Ambos jogadores fizeram ${player1.score} pontos!`
+    }
+
+    setAlertConfig({
+      title: `🏆 Resultado do Duelo`,
+      description: `${description}\n\nJogador 1: ${player1.score} pts (${player1.moves} movimentos)\nJogador 2: ${player2.score} pts (${player2.moves} movimentos)`,
+      confirmText: "Novo Jogo",
+      isSuccess: true,
+      onConfirm: () => {
+        setShowDuelResults(false)
+        setShowModeSelect(true)
+      },
+    })
+    setShowAlert(true)
   }
 
   // End game
@@ -519,6 +576,13 @@ export default function MemoryGame() {
     }
   }, [matched, gameActive])
 
+  // Show duel results when both players finish
+  useEffect(() => {
+    if (showDuelResults) {
+      showDuelResultsDialog()
+    }
+  }, [showDuelResults])
+
   // Load rankings from localStorage
   useEffect(() => {
     const savedRankings = localStorage.getItem("memoryGameRankings")
@@ -635,7 +699,10 @@ export default function MemoryGame() {
                 rating={getRating()}
                 timeDisplay={timerMode === "countdown" ? formatTime(timeLeft) : formatTime(timeElapsed)}
                 matchedPairs={matched.length / 2}
+                gameActive={gameActive}
+                autoStart={autoStart}
                 onRestart={handleRestart}
+                onPlay={startGame}
               />
 
               <GameBoard
@@ -708,6 +775,13 @@ export default function MemoryGame() {
                     </Button>
                   </div>
                 </div>
+              </div>
+
+              <div className="flex items-center space-x-4">
+                <Switch id="auto-start" checked={autoStart} onCheckedChange={setAutoStart} />
+                <Label htmlFor="auto-start" className="text-lg">
+                  Início automático
+                </Label>
               </div>
 
               {gameMode === "normal" && (
@@ -805,9 +879,9 @@ export default function MemoryGame() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.4 }}
         >
-          <div className=" rounded-lg  flex flex-col items-center gap-2">
-            <h2 className="bg-white px-2 rounded-lg font-bold shadow-md">Patricionadora Oficial</h2>
-            <div className="flex flex-col gap-2 ">
+          <div className="rounded-lg flex flex-col items-center gap-2">
+            <h2 className="bg-white px-2 rounded-lg font-bold shadow-md">Patrocinadora Oficial</h2>
+            <div className="flex flex-col gap-2">
               <div className="flex flex-col items-center gap-2 bg-white px-0 py-3 rounded-lg shadow-md">
                 <Image src="/assets/sponsorship/logo-zaplus.png" width={90} height={90} alt="Zaplus" />
                 <Image src="/assets/qr-zaplus-car.png" alt="QR Zaplus" width={100} height={100} />
@@ -870,7 +944,9 @@ export default function MemoryGame() {
         <AlertDialogContent className="max-w-[600px]">
           <AlertDialogHeader>
             <AlertDialogTitle className="text-2xl">{alertConfig.title}</AlertDialogTitle>
-            <AlertDialogDescription className="text-lg">{alertConfig.description}</AlertDialogDescription>
+            <AlertDialogDescription className="text-lg whitespace-pre-line">
+              {alertConfig.description}
+            </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter className="flex justify-center">
             <AlertDialogAction className="text-lg px-6 py-3" onClick={alertConfig.onConfirm}>

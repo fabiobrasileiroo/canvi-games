@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react"
 
-export function useSound(soundUrl: string, loop = false) {
+export function useSound(soundUrl: string, loop = false, volume = 1.0) {
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const [isPlaying, setIsPlaying] = useState(false)
   const [isLoaded, setIsLoaded] = useState(false)
@@ -12,6 +12,7 @@ export function useSound(soundUrl: string, loop = false) {
     if (typeof window !== "undefined") {
       const audio = new Audio(soundUrl)
       audio.loop = loop
+      audio.volume = volume
       audioRef.current = audio
 
       audio.addEventListener("canplaythrough", () => {
@@ -30,7 +31,7 @@ export function useSound(soundUrl: string, loop = false) {
         audio.removeEventListener("ended", () => {})
       }
     }
-  }, [soundUrl, loop])
+  }, [soundUrl, loop, volume])
 
   const play = () => {
     if (audioRef.current) {
