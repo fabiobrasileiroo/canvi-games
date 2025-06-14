@@ -117,7 +117,7 @@ export default function MemoryGame() {
     description: "",
     confirmText: "",
     isSuccess: false,
-    onConfirm: () => {},
+    onConfirm: () => { },
   })
 
   // Sound effects
@@ -150,7 +150,7 @@ export default function MemoryGame() {
     const newArray = [...array]
     for (let i = newArray.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1))
-      ;[newArray[i], newArray[j]] = [newArray[j], newArray[i]]
+        ;[newArray[i], newArray[j]] = [newArray[j], newArray[i]]
     }
     return newArray
   }
@@ -800,14 +800,20 @@ export default function MemoryGame() {
       {/* Patrocinadores */}
       {showQrCodes && (
         <motion.div
-          className="flex justify-center gap-8 mt-8 w-full max-w-[1000px]"
+          className="flex justify-center gap-8 mt-0 w-full max-w-[1000px]"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.4 }}
         >
-          <div className="bg-white p-5 rounded-lg shadow-md flex items-center gap-4">
-            <Image src="/assets/sponsorship/logo-zaplus.png" width={90} height={90} alt="Zaplus" />
-            <Image src="/assets/qr-zaplus-car.png" alt="QR Zaplus" width={100} height={100} />
+          <div className=" rounded-lg  flex flex-col items-center gap-2">
+            <h2 className="bg-white px-2 rounded-lg font-bold shadow-md">Patricionadora Oficial</h2>
+            <div className="flex flex-col gap-2 ">
+              <div className="flex flex-col items-center gap-2 bg-white px-0 py-3 rounded-lg shadow-md">
+                <Image src="/assets/sponsorship/logo-zaplus.png" width={90} height={90} alt="Zaplus" />
+                <Image src="/assets/qr-zaplus-car.png" alt="QR Zaplus" width={100} height={100} />
+              </div>
+              <p className="bg-white px-2 rounded-lg text-center shadow-md">Siga a gente no instagram</p>
+            </div>
           </div>
         </motion.div>
       )}

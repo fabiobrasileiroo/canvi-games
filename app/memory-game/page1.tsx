@@ -1107,6 +1107,7 @@ export default function MemoryGame() {
           transition={{ duration: 0.5, delay: 0.4 }}
         >
           <div className="bg-white p-3 rounded-lg shadow-md flex items-center gap-2">
+            <h2>Patricionadora Oficial</h2>
             <Image src="/assets/sponsorship/logo-zaplus.png" width={60} height={60} alt="Zaplus" />
             <Image src="/assets/qr-zaplus-car.png" alt="QR Zaplus" width={70} height={70} />
           </div>

@@ -92,11 +92,12 @@ export function MemoryCard({ symbol, index, isOpened, isMatched, isWrongPair, on
           >
             <Image
               src="/assets/games/back-card.svg"
-              width={110}
-              height={110}
+              width={100}
+              height={100}
               alt="back-card"
               priority
-              className="w-16 h-16 sm:w-[100px] sm:h-[100px] lg:w-[110px] lg:h-[110px]"
+              draggable="false"
+              // className="w-16 h-16 sm:w-[100px] sm:h-[100px] lg:w-[110px] lg:h-[100px]"
             />
           </motion.div>
         </div>
@@ -129,9 +130,10 @@ export function MemoryCard({ symbol, index, isOpened, isMatched, isWrongPair, on
             <Image
               src={`/assets/${symbol}`}
               alt={symbol}
-              width={85}
-              height={85}
-              className="object-contain w-14 h-14 sm:w-[80px] sm:h-[80px] lg:w-[85px] lg:h-[85px]"
+              width={100}
+              height={100}
+              draggable="false"
+              // className="object-contain w-14 h-14 sm:w-[80px] sm:h-[80px] lg:w-[85px] lg:h-[85px]"
               priority
             />
           </motion.div>

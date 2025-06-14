@@ -83,8 +83,8 @@ export function TeamSelection({ gameMode, currentDuelPlayer, onSelectTeam }: Tea
                   <Image
                     src="/assets/boi-azul-caprichoso.svg"
                     alt="Boi Caprichoso"
-                    width={250}
-                    height={250}
+                    width={215}
+                    height={215}
                     className="mb-4"
                   />
                   <span className="font-bold">Boi Caprichoso</span>
