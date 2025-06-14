@@ -32,9 +32,9 @@ export function GameHeader({
   onToggleSound,
 }: GameHeaderProps) {
   return (
-    <div className="flex justify-between items-center mb-4">
-      <div className="flex items-center gap-2">
-        <h1 className="text-2xl font-bold">{gameMode === "duelo" ? `Jogador ${currentDuelPlayer + 1}` : "Jogador: "}</h1>
+    <div className="flex justify-between items-center mb-6">
+      <div className="flex items-center gap-3">
+        <h1 className="text-3xl font-bold">{gameMode === "duelo" ? `Jogador ${currentDuelPlayer + 1}` : "Time: "}</h1>
         <div className="flex items-center">
           {selectedTeam && (
             <Image
@@ -42,59 +42,59 @@ export function GameHeader({
                 selectedTeam === "garantido" ? "/assets/boi-vermelho-garantido.svg" : "/assets/boi-azul-caprichoso.svg"
               }
               alt={selectedTeam === "garantido" ? "Boi Garantido" : "Boi Caprichoso"}
-              width={75}
-              height={75}
+              width={90}
+              height={90}
               className=""
             />
           )}
         </div>
       </div>
 
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-3">
         <Button
           variant="ghost"
           size="icon"
           onClick={() => onTabChange("game")}
-          className={cn("transition-colors", activeTab === "game" ? "bg-muted" : "")}
+          className={cn("transition-colors h-12 w-12", activeTab === "game" ? "bg-muted" : "")}
           title="Jogo"
         >
-          <Home size={20} />
+          <Home size={24} />
         </Button>
         <Button
           variant="ghost"
           size="icon"
           onClick={() => onTabChange("settings")}
-          className={cn("transition-colors", activeTab === "settings" ? "bg-muted" : "")}
+          className={cn("transition-colors h-12 w-12", activeTab === "settings" ? "bg-muted" : "")}
           title="Configurações"
         >
-          <Settings size={20} />
+          <Settings size={24} />
         </Button>
         <Button
           variant="ghost"
           size="icon"
           onClick={() => onTabChange("ranking")}
-          className={cn("transition-colors", activeTab === "ranking" ? "bg-muted" : "")}
+          className={cn("transition-colors h-12 w-12", activeTab === "ranking" ? "bg-muted" : "")}
           title="Ranking"
         >
-          <Trophy size={20} />
+          <Trophy size={24} />
         </Button>
         <Button
           variant="ghost"
           size="icon"
           onClick={onToggleMusic}
-          className="transition-colors"
+          className="transition-colors h-12 w-12"
           title={musicEnabled ? "Desativar música" : "Ativar música"}
         >
-          {musicEnabled ? <Music2 size={20} /> : <Music size={20} className="text-muted-foreground" />}
+          {musicEnabled ? <Music2 size={24} /> : <Music size={24} className="text-muted-foreground" />}
         </Button>
         <Button
           variant="ghost"
           size="icon"
           onClick={onToggleSound}
-          className="transition-colors"
+          className="transition-colors h-12 w-12"
           title={soundEnabled ? "Desativar sons" : "Ativar sons"}
         >
-          {soundEnabled ? <Volume2 size={20} /> : <VolumeX size={20} className="text-muted-foreground" />}
+          {soundEnabled ? <Volume2 size={24} /> : <VolumeX size={24} className="text-muted-foreground" />}
         </Button>
       </div>
     </div>

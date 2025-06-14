@@ -558,12 +558,12 @@ export default function MemoryGame() {
     >
       {/* Logo */}
       <motion.div
-        className="flex justify-center mb-4 w-full max-w-[600px]"
+        className="flex justify-center mb-6 w-full max-w-[800px]"
         initial={{ opacity: 0, y: -30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        <Image src="/assets/games/jogo-da-memoria.svg" width={250} height={77} alt="Jogo da memoria" className="mb-2" />
+        <Image src="/assets/games/jogo-da-memoria.svg" width={320} height={98} alt="Jogo da memoria" className="mb-3" />
       </motion.div>
 
       {/* Win effect overlay */}
@@ -578,7 +578,7 @@ export default function MemoryGame() {
           >
             <motion.div
               className={cn(
-                "text-6xl font-bold drop-shadow-[0_0_10px_rgba(255,215,0,0.7)]",
+                "text-7xl font-bold drop-shadow-[0_0_10px_rgba(255,215,0,0.7)]",
                 selectedTeam === "garantido" ? "text-red-500" : "text-blue-500",
               )}
               initial={{ scale: 0.5, rotate: -10 }}
@@ -603,7 +603,7 @@ export default function MemoryGame() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.2 }}
       >
-        <Card className="p-6 mb-6 shadow-lg max-w-[600px] w-full">
+        <Card className="p-8 mb-8 shadow-lg max-w-[800px] w-full">
           <GameHeader
             gameMode={gameMode}
             currentDuelPlayer={currentDuelPlayer}
@@ -619,7 +619,7 @@ export default function MemoryGame() {
           {/* Game Tab */}
           {activeTab === "game" && (
             <motion.div
-              className="space-y-4"
+              className="space-y-6"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.3 }}
@@ -645,20 +645,20 @@ export default function MemoryGame() {
           {/* Settings Tab */}
           {activeTab === "settings" && (
             <motion.div
-              className="space-y-4"
+              className="space-y-6"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.3 }}
             >
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-2 gap-6">
                 <div>
-                  <h3 className="font-medium mb-2">Dificuldade</h3>
-                  <div className="flex gap-2">
+                  <h3 className="font-medium mb-3 text-lg">Dificuldade</h3>
+                  <div className="flex gap-3">
                     <Button
                       variant={difficulty === "easy" ? "default" : "outline"}
                       size="sm"
                       onClick={() => changeDifficulty("easy")}
-                      className="transition-all"
+                      className="transition-all text-base px-4 py-2"
                     >
                       Fácil
                     </Button>
@@ -666,7 +666,7 @@ export default function MemoryGame() {
                       variant={difficulty === "medium" ? "default" : "outline"}
                       size="sm"
                       onClick={() => changeDifficulty("medium")}
-                      className="transition-all"
+                      className="transition-all text-base px-4 py-2"
                     >
                       Médio
                     </Button>
@@ -674,7 +674,7 @@ export default function MemoryGame() {
                       variant={difficulty === "hard" ? "default" : "outline"}
                       size="sm"
                       onClick={() => changeDifficulty("hard")}
-                      className="transition-all"
+                      className="transition-all text-base px-4 py-2"
                     >
                       Difícil
                     </Button>
@@ -682,13 +682,13 @@ export default function MemoryGame() {
                 </div>
 
                 <div>
-                  <h3 className="font-medium mb-2">Modo de Tempo</h3>
-                  <div className="flex gap-2">
+                  <h3 className="font-medium mb-3 text-lg">Modo de Tempo</h3>
+                  <div className="flex gap-3">
                     <Button
                       variant={timerMode === "countdown" ? "default" : "outline"}
                       size="sm"
                       onClick={() => changeTimerMode("countdown")}
-                      className="transition-all"
+                      className="transition-all text-base px-4 py-2"
                     >
                       Regressivo
                     </Button>
@@ -696,7 +696,7 @@ export default function MemoryGame() {
                       variant={timerMode === "elapsed" ? "default" : "outline"}
                       size="sm"
                       onClick={() => changeTimerMode("elapsed")}
-                      className="transition-all"
+                      className="transition-all text-base px-4 py-2"
                     >
                       Cronômetro
                     </Button>
@@ -705,19 +705,27 @@ export default function MemoryGame() {
               </div>
 
               {gameMode === "normal" && (
-                <div className="flex items-center space-x-2">
+                <div className="flex items-center space-x-3">
                   <Switch id="ranking-mode" checked={enableRanking} onCheckedChange={setEnableRanking} />
-                  <Label htmlFor="ranking-mode">Ativar ranking</Label>
+                  <Label htmlFor="ranking-mode" className="text-base">
+                    Ativar ranking
+                  </Label>
                 </div>
               )}
 
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-3">
                 <Switch id="qr-codes" checked={showQrCodes} onCheckedChange={setShowQrCodes} />
-                <Label htmlFor="qr-codes">Mostrar patrocinadores</Label>
+                <Label htmlFor="qr-codes" className="text-base">
+                  Mostrar patrocinadores
+                </Label>
               </div>
 
-              <div className="mt-4">
-                <Button variant="outline" className="w-full transition-all" onClick={() => setShowModeSelect(true)}>
+              <div className="mt-6">
+                <Button
+                  variant="outline"
+                  className="w-full transition-all text-base py-3"
+                  onClick={() => setShowModeSelect(true)}
+                >
                   Mudar Modo de Jogo
                 </Button>
               </div>
@@ -727,7 +735,7 @@ export default function MemoryGame() {
           {/* Ranking Tab */}
           {activeTab === "ranking" && (
             <motion.div
-              className="space-y-2 max-h-[300px] overflow-y-auto"
+              className="space-y-3 max-h-[350px] overflow-y-auto"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.3 }}
@@ -737,7 +745,7 @@ export default function MemoryGame() {
                   <motion.div
                     key={index}
                     className={cn(
-                      "flex justify-between items-center p-2 rounded-md transition-all",
+                      "flex justify-between items-center p-3 rounded-md transition-all",
                       entry.team === "garantido"
                         ? "bg-red-100"
                         : entry.team === "caprichoso"
@@ -749,8 +757,8 @@ export default function MemoryGame() {
                     transition={{ delay: index * 0.1 }}
                   >
                     <div className="flex items-center">
-                      <span className="font-bold mr-2">{index + 1}.</span>
-                      <span className="truncate max-w-[150px]">{entry.name}</span>
+                      <span className="font-bold mr-3 text-lg">{index + 1}.</span>
+                      <span className="truncate max-w-[200px] text-base">{entry.name}</span>
                       {entry.team && (
                         <Image
                           src={
@@ -759,21 +767,21 @@ export default function MemoryGame() {
                               : "/assets/boi-azul-caprichoso.svg"
                           }
                           alt={entry.team === "garantido" ? "Boi Garantido" : "Boi Caprichoso"}
-                          width={32}
-                          height={32}
-                          className="ml-2"
+                          width={40}
+                          height={40}
+                          className="ml-3"
                         />
                       )}
                     </div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm">{formatTime(entry.time)}</span>
-                      <span className="font-bold">{entry.score} pts</span>
-                      <Trophy size={16} className="text-yellow-500" />
+                    <div className="flex items-center gap-3">
+                      <span className="text-base">{formatTime(entry.time)}</span>
+                      <span className="font-bold text-base">{entry.score} pts</span>
+                      <Trophy size={20} className="text-yellow-500" />
                     </div>
                   </motion.div>
                 ))
               ) : (
-                <div className="text-center py-4 text-muted-foreground">
+                <div className="text-center py-8 text-muted-foreground text-base">
                   Nenhum ranking ainda. Jogue para registrar sua pontuação!
                 </div>
               )}
@@ -785,41 +793,41 @@ export default function MemoryGame() {
       {/* Patrocinadores */}
       {showQrCodes && (
         <motion.div
-          className="flex justify-center gap-4 mt-4 w-full max-w-[600px]"
+          className="flex justify-center gap-6 mt-6 w-full max-w-[800px]"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.4 }}
         >
-          <div className="bg-white p-3 rounded-lg shadow-md flex items-center gap-2">
-            <Image src="/assets/sponsorship/logo-zaplus.png" width={60} height={60} alt="Zaplus" />
-            <Image src="/assets/qr-zaplus-car.png" alt="QR Zaplus" width={70} height={70} />
+          <div className="bg-white p-4 rounded-lg shadow-md flex items-center gap-3">
+            <Image src="/assets/sponsorship/logo-zaplus.png" width={75} height={75} alt="Zaplus" />
+            <Image src="/assets/qr-zaplus-car.png" alt="QR Zaplus" width={85} height={85} />
           </div>
         </motion.div>
       )}
 
       {/* Dialogs */}
       <AlertDialog open={showNameInput} onOpenChange={setShowNameInput}>
-        <AlertDialogContent>
+        <AlertDialogContent className="max-w-[500px]">
           <AlertDialogHeader>
-            <AlertDialogTitle>
+            <AlertDialogTitle className="text-xl">
               Vitória do Boi {selectedTeam === "garantido" ? "Garantido" : "Caprichoso"}!
             </AlertDialogTitle>
             <AlertDialogDescription>
-              <div className="mb-4">
+              <div className="mb-4 text-base">
                 Pontuação: <span className="font-bold">{calculateScore()} pontos</span>
               </div>
-              <div className="mb-4">Digite seu nome para o ranking ou use o nome gerado automaticamente.</div>
+              <div className="mb-4 text-base">Digite seu nome para o ranking ou use o nome gerado automaticamente.</div>
               <Input
                 value={playerName}
                 onChange={(e) => setPlayerName(e.target.value)}
                 placeholder="Seu nome"
-                className="mb-2"
+                className="mb-3 text-base"
               />
               <Button
                 variant="outline"
                 size="sm"
                 onClick={() => setPlayerName(generateRandomName())}
-                className="w-full mb-4"
+                className="w-full mb-4 text-base py-2"
               >
                 Gerar nome aleatório
               </Button>
@@ -827,6 +835,7 @@ export default function MemoryGame() {
           </AlertDialogHeader>
           <AlertDialogFooter className="flex justify-between">
             <AlertDialogCancel
+              className="text-base"
               onClick={() => {
                 setShowNameInput(false)
                 setShowModeSelect(true)
@@ -834,7 +843,10 @@ export default function MemoryGame() {
             >
               Pular
             </AlertDialogCancel>
-            <AlertDialogAction onClick={() => addRankingEntry(playerName || generateRandomName())}>
+            <AlertDialogAction
+              className="text-base"
+              onClick={() => addRankingEntry(playerName || generateRandomName())}
+            >
               Salvar pontuação
             </AlertDialogAction>
           </AlertDialogFooter>
@@ -842,13 +854,15 @@ export default function MemoryGame() {
       </AlertDialog>
 
       <AlertDialog open={showAlert} onOpenChange={setShowAlert}>
-        <AlertDialogContent>
+        <AlertDialogContent className="max-w-[500px]">
           <AlertDialogHeader>
-            <AlertDialogTitle>{alertConfig.title}</AlertDialogTitle>
-            <AlertDialogDescription>{alertConfig.description}</AlertDialogDescription>
+            <AlertDialogTitle className="text-xl">{alertConfig.title}</AlertDialogTitle>
+            <AlertDialogDescription className="text-base">{alertConfig.description}</AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter className="flex justify-center">
-            <AlertDialogAction onClick={alertConfig.onConfirm}>{alertConfig.confirmText}</AlertDialogAction>
+            <AlertDialogAction className="text-base" onClick={alertConfig.onConfirm}>
+              {alertConfig.confirmText}
+            </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
