@@ -14,7 +14,7 @@ interface GameBoardProps {
 export function GameBoard({ cards, opened, matched, wrongPair, onCardClick }: GameBoardProps) {
   return (
     <motion.div
-      className="deck bg-[#e7a9fc] p-8 rounded-xl shadow-[8px_8px_0_0_#e2e2e2]"
+      className="deck bg-[#f0f0f0] p-8 rounded-xl shadow-[8px_8px_0_0_#e7a9fc]"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}

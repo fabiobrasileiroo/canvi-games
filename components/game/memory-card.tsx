@@ -106,7 +106,7 @@ export function MemoryCard({ symbol, index, isOpened, isMatched, isWrongPair, on
         <div
           className={cn(
             "absolute inset-0 rounded-lg flex items-center justify-center",
-            isMatched && "bg-[#9BCB3C]",
+            isMatched && "bg-[#4eea68]",
             isOpened && !isMatched && !showErrorAnimation && "bg-[#670c5f]",
             showErrorAnimation && "bg-[#fe6536]",
           )}
@@ -128,7 +128,7 @@ export function MemoryCard({ symbol, index, isOpened, isMatched, isWrongPair, on
             }}
           >
             <Image
-              src={`/assets/${symbol}`}
+              src={symbol === "cracha-pix.svg" ? `/assets/${symbol.replace('cracha-pix.svg','cracha-pix.png')}`: `/assets/${symbol}`}
               alt={symbol}
               width={100}
               height={100}
