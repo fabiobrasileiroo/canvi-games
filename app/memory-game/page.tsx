@@ -124,7 +124,7 @@ export default function MemoryGame() {
   // Sound effects com volume reduzido para música de fundo
   const { play: playFlip } = useSound("/sounds/flip.mp3")
   const { play: playMatch } = useSound("/sounds/arcade-bonus-cartas-par.wav")
-  const { play: playNoMatch } = useSound("/sounds/wrong-card.wav")
+  const { play: playNoMatch } = useSound("/sounds/wrong-card.mp3")
   const { play: playWin } = useSound("/sounds/game-win-2016.wav")
   const { play: playLose } = useSound("/sounds/lose.mp3")
   const {

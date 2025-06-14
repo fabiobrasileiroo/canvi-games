@@ -9,7 +9,7 @@ const inter = Inter({ subsets: ["latin"] })
 export const metadata: Metadata = {
   title: "Jogo da Memória Canvi",
   description: "Um jogo da memória divertido",
-    generator: 'v0.dev'
+    generator: 'canvi'
 }
 
 export default function RootLayout({
