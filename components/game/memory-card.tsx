@@ -97,7 +97,6 @@ export function MemoryCard({ symbol, index, isOpened, isMatched, isWrongPair, on
               alt="back-card"
               priority
               draggable="false"
-              // className="w-16 h-16 sm:w-[100px] sm:h-[100px] lg:w-[110px] lg:h-[100px]"
             />
           </motion.div>
         </div>
@@ -133,7 +132,7 @@ export function MemoryCard({ symbol, index, isOpened, isMatched, isWrongPair, on
               width={100}
               height={100}
               draggable="false"
-              // className="object-contain w-14 h-14 sm:w-[80px] sm:h-[80px] lg:w-[85px] lg:h-[85px]"
+        
               priority
             />
           </motion.div>
