@@ -940,6 +940,153 @@ export default function MemoryGame() {
         </AlertDialogContent>
       </AlertDialog>
 
+          {/* Duel results dialog */}
+      <AlertDialog open={showDuelResults} onOpenChange={setShowDuelResults}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Resultado do Duelo!</AlertDialogTitle>
+            <AlertDialogDescription>
+              <div className="space-y-4 mt-4">
+                <div className="grid grid-cols-2 gap-4">
+                  {duelPlayers.length > 0 && (
+                    <>
+                      <div
+                        className={cn(
+                          "p-4 rounded-lg",
+                          duelPlayers[0]?.team === "garantido" ? "bg-red-100" : "bg-blue-100",
+                        )}
+                      >
+                        <h3 className="font-bold text-lg mb-2">Jogador 1</h3>
+                        <div className="flex items-center mb-2">
+                          <Image
+                            src={
+                              duelPlayers[0]?.team === "garantido"
+                                ? "/assets/boi-vermelho-garantido.svg"
+                                : "/assets/boi-azul-caprichoso.svg"
+                            }
+                            alt={duelPlayers[0]?.team === "garantido" ? "Boi Garantido" : "Boi Caprichoso"}
+                            width={30}
+                            height={30}
+                            className="mr-2"
+                          />
+                          <span>{duelPlayers[0]?.team === "garantido" ? "Garantido" : "Caprichoso"}</span>
+                        </div>
+                        <div className="space-y-1 text-sm">
+                          <div>
+                            {/* Pontuação: <span className="font-bold">{duelPlayers[0]?.score}</span> */}
+                          </div>
+                          <div>
+                            Movimentos: <span className="font-bold">{duelPlayers[0]?.moves}</span>
+                          </div>
+                          <div>
+                            Tempo: <span className="font-bold">{formatTime(duelPlayers[0]?.time || 0)}</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div
+                        className={cn(
+                          "p-4 rounded-lg",
+                          duelPlayers[1]?.team === "garantido" ? "bg-red-100" : "bg-blue-100",
+                        )}
+                      >
+                        <h3 className="font-bold text-lg mb-2">Jogador 2</h3>
+                        <div className="flex items-center mb-2">
+                          <Image
+                            src={
+                              duelPlayers[1]?.team === "garantido"
+                                ? "/assets/boi-vermelho-garantido.svg"
+                                : "/assets/boi-azul-caprichoso.svg"
+                            }
+                            alt={duelPlayers[1]?.team === "garantido" ? "Boi Garantido" : "Boi Caprichoso"}
+                            width={30}
+                            height={30}
+                            className="mr-2"
+                          />
+                          <span>{duelPlayers[1]?.team === "garantido" ? "Garantido" : "Caprichoso"}</span>
+                        </div>
+                        <div className="space-y-1 text-sm">
+                          <div>
+                            {/* Pontuação: <span className="font-bold">{duelPlayers[1]?.score}</span> */}
+                          </div>
+                          <div>
+                            Movimentos: <span className="font-bold">{duelPlayers[1]?.moves}</span>
+                          </div>
+                          <div>
+                            Tempo: <span className="font-bold">{formatTime(duelPlayers[1]?.time || 0)}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </>
+                  )}
+                </div>
+
+                <div className="mt-6 p-4 bg-yellow-100 rounded-lg text-center">
+                  <h3 className="font-bold text-xl mb-2">Vencedor</h3>
+                  {duelPlayers.length > 1 && (
+                    <>
+                      {duelPlayers[0]?.score > duelPlayers[1]?.score ? (
+                        <div className="flex flex-col items-center">
+                          <span className="text-lg font-bold">Jogador 1</span>
+                          <div className="flex items-center mt-2">
+                            <Image
+                              src={
+                                duelPlayers[0]?.team === "garantido"
+                                  ? "/assets/boi-vermelho-garantido.svg"
+                                  : "/assets/boi-azul-caprichoso.svg"
+                              }
+                              alt={duelPlayers[0]?.team === "garantido" ? "Boi Garantido" : "Boi Caprichoso"}
+                              width={40}
+                              height={40}
+                              className="mr-2"
+                            />
+                            <span className="text-lg">
+                              Boi {duelPlayers[0]?.team === "garantido" ? "Garantido" : "Caprichoso"}
+                            </span>
+                          </div>
+                        </div>
+                      ) : duelPlayers[1]?.score > duelPlayers[0]?.score ? (
+                        <div className="flex flex-col items-center">
+                          <span className="text-lg font-bold">Jogador 2</span>
+                          <div className="flex items-center mt-2">
+                            <Image
+                              src={
+                                duelPlayers[1]?.team === "garantido"
+                                  ? "/assets/boi-vermelho-garantido.svg"
+                                  : "/assets/boi-azul-caprichoso.svg"
+                              }
+                              alt={duelPlayers[1]?.team === "garantido" ? "Boi Garantido" : "Boi Caprichoso"}
+                              width={40}
+                              height={40}
+                              className="mr-2"
+                            />
+                            <span className="text-lg">
+                              Boi {duelPlayers[1]?.team === "garantido" ? "Garantido" : "Caprichoso"}
+                            </span>
+                          </div>
+                        </div>
+                      ) : (
+                        <span className="text-lg font-bold">Empate!</span>
+                      )}
+                    </>
+                  )}
+                </div>
+              </div>
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogAction
+              onClick={() => {
+                setShowDuelResults(false)
+                setShowModeSelect(true) // Alterado para voltar à seleção de modo
+              }}
+            >
+              Jogar Novamente
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
       <AlertDialog open={showAlert} onOpenChange={setShowAlert}>
         <AlertDialogContent className="max-w-[600px]">
           <AlertDialogHeader>

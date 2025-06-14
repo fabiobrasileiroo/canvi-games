@@ -15,16 +15,17 @@ interface MemoryCardProps {
 
 export function MemoryCard({ symbol, index, isOpened, isMatched, isWrongPair, onClick }: MemoryCardProps) {
   const isFlipped = isOpened || isMatched
+
   const [showErrorAnimation, setShowErrorAnimation] = useState(false)
 
   // Controla quando mostrar a animação de erro
   useEffect(() => {
     if (isWrongPair) {
-      setShowErrorAnimation(true)
-      // Reset error animation after showing it
+      // Delay para mostrar a carta primeiro, depois o erro
       const timer = setTimeout(() => {
-        setShowErrorAnimation(false)
-      }, 800) // Shorter duration to prevent blocking
+        setShowErrorAnimation(true)
+      }, 800) // Tempo para ver o símbolo antes do efeito de erro
+
       return () => clearTimeout(timer)
     } else {
       setShowErrorAnimation(false)
@@ -68,7 +69,7 @@ export function MemoryCard({ symbol, index, isOpened, isMatched, isWrongPair, on
       <motion.div
         className="relative w-full h-full"
         animate={{
-          rotateY: isFlipped && !isWrongPair ? 180 : 0,
+          rotateY: isFlipped ? 180 : 0,
         }}
         transition={{
           duration: 0.3,
@@ -114,7 +115,7 @@ export function MemoryCard({ symbol, index, isOpened, isMatched, isWrongPair, on
             "absolute inset-0 rounded-lg flex items-center justify-center transition-colors duration-300",
             isMatched && "bg-[#4eea68]",
             isOpened && !isMatched && !showErrorAnimation && "bg-[#670c5f]",
-            showErrorAnimation && "bg-[#fe6536]",
+            isOpened && !isMatched && showErrorAnimation && "bg-[#fe6536]",
           )}
           style={{
             backfaceVisibility: "hidden",
@@ -128,7 +129,7 @@ export function MemoryCard({ symbol, index, isOpened, isMatched, isWrongPair, on
               scale: isFlipped ? 1 : 0.3,
             }}
             transition={{
-              delay: isFlipped ? 0.15 : 0, // Delay menor para flip mais rápido
+              delay: isFlipped ? 0.15 : 0,
               duration: 0.25,
               ease: "easeOut",
             }}
