@@ -36,14 +36,14 @@ const GameRedirectPage: React.FC = () => {
       color: "from-red-500 to-blue-500",
       external: true, // abre em nova aba
     },
-    {
-      id: "roulette",
-      title: "Roleta",
-      description: "A emoção do cassino clássico",
-      icon: RotateCw,
-      link: "#",
-      color: "from-red-500 to-blue-500",
-    },
+    // {
+    //   id: "roulette",
+    //   title: "Roleta",
+    //   description: "A emoção do cassino clássico",
+    //   icon: RotateCw,
+    //   link: "#",
+    //   color: "from-red-500 to-blue-500",
+    // },
   ];
 
   return (
@@ -73,7 +73,7 @@ const GameRedirectPage: React.FC = () => {
         </div>
 
         {/* Cards dos Jogos */}
-        <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+        <div className="grid md:grid-cols-2 gap-6 h-5xl w-6xl mx-auto">
           {games.map((game) => {
             const IconComponent = game.icon;
 
@@ -90,11 +90,11 @@ const GameRedirectPage: React.FC = () => {
                     className={`inline-flex items-center justify-center w-12 h-12 rounded-lg bg-gradient-to-r ${game.color} mb-4`}
                   > */}
                   {game.image ? (
-                    <Image
+                    < Image
                       src={game.image}
                       alt={game.title}
-                      width={200}
-                      height={200}
+                      width={game.title !== "Jogo da Memória"? 400: 460}
+                      height={400}
                       className="rounded"
                     />
                   ) : (
