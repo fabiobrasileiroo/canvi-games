@@ -91,7 +91,7 @@ export default function MemoryGame() {
   const [showModeSelect, setShowModeSelect] = useState(true)
   const [playerName, setPlayerName] = useState("")
   const [difficulty, setDifficulty] = useState<Difficulty>("medium")
-  const [timerMode, setTimerMode] = useState<TimerMode>("countdown")
+  const [timerMode, setTimerMode] = useState<TimerMode>("elapsed")
   const [wrongPair, setWrongPair] = useState<number[]>([])
   const [musicEnabled, setMusicEnabled] = useState(true)
   const [soundEnabled, setSoundEnabled] = useState(true)

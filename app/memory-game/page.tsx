@@ -104,7 +104,7 @@ export default function MemoryGame() {
   const [soundEnabled, setSoundEnabled] = useState(true)
   const [enableRanking, setEnableRanking] = useState(true)
   const [showQrCodes, setShowQrCodes] = useState(true)
-  const [autoStart, setAutoStart] = useState(true)
+  const [autoStart, setAutoStart] = useState(false)
   const [rankings, setRankings] = useState<RankingEntry[]>([])
   const [winEffectActive, setWinEffectActive] = useState(false)
   const [activeTab, setActiveTab] = useState<"game" | "settings" | "ranking">("game")
