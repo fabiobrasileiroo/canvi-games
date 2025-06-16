@@ -848,7 +848,7 @@ export default function MemoryGame() {
           transition={{ duration: 0.5, delay: 0.4 }}
         >
           <div className="rounded-lg flex flex-col items-center gap-2">
-            <h2 className="bg-white px-2 rounded-lg font-bold shadow-md">Patrocinio Oficial</h2>
+            <h2 className="bg-white px-2 rounded-lg font-bold shadow-md">Patrocínio Oficial</h2>
             <div className="flex flex-col gap-2">
               <div className="flex flex-col items-center gap-2 bg-white px-0 py-3 rounded-lg shadow-md">
                 <Image src="/assets/sponsorship/logo-zaplus.png" width={90} height={90} alt="Zaplus" />
