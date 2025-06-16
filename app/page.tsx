@@ -3,6 +3,7 @@ import React from "react";
 import Image from "next/image";
 import { Brain, DollarSign, RotateCw, Play } from "lucide-react";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 interface Game {
   id: string;
@@ -93,7 +94,7 @@ const GameRedirectPage: React.FC = () => {
                     < Image
                       src={game.image}
                       alt={game.title}
-                      width={game.title !== "Jogo da Memória"? 400: 460}
+                      width={game.title !== "Jogo da Memória" ? 400 : 460}
                       height={400}
                       className="rounded"
                     />
@@ -120,8 +121,26 @@ const GameRedirectPage: React.FC = () => {
             );
           })}
         </div>
+      <motion.div
+        className="flex justify-end -ml-6 mt-6 w-full max-w-[800px] relative z-10"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.4 }}
+      >
+        <div className="rounded-lg flex flex-col items-center gap-2">
+          <h2 className="bg-white px-4 py-2 rounded-lg font-bold shadow-md text-lg">Patrocínio Oficial</h2>
+          <div className="flex flex-col gap-2">
+            <div className="flex flex-col items-center gap-2 bg-white px-4 py-3 rounded-lg shadow-md">
+              <Image src="/assets/sponsorship/logo-zaplus.png" width={90} height={90} alt="Zaplus" />
+              <Image src="/assets/qr-zaplus-car.png" alt="QR Zaplus" width={100} height={100} />
+            </div>
+            <p className="bg-white px-2 py-1 rounded-lg text-center shadow-md text-sm">Siga a gente no instagram</p>
+          </div>
+        </div>
+      </motion.div>
       </div>
-    </div>
+    {/* </motion.div> */}
+    </div >
   );
 };
 
