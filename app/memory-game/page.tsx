@@ -94,7 +94,7 @@ const generateRandomName = () => {
     "Amazonudo",
     "CapriFã",
     "Garantilover",
-    "LendaDoBoi"
+    "LendaDoBoi",
   ]
 
   const suffixes = [
@@ -112,7 +112,7 @@ const generateRandomName = () => {
     "Lenda do Festival",
     "Pajé Supremo",
     "Cunhã Estiloso",
-    "BoiRaiz"
+    "BoiRaiz",
   ]
 
   // const prefixes = [
@@ -251,10 +251,39 @@ export default function MemoryGame() {
     const newArray = [...array]
     for (let i = newArray.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1))
-        ;[newArray[i], newArray[j]] = [newArray[j], newArray[i]]
+      ;[newArray[i], newArray[j]] = [newArray[j], newArray[i]]
     }
     return newArray
   }
+  const shuffleBalanced = (array: string[], maxAttempts = 10) => {
+    const calculateProximityScore = (arr: string[]) => {
+      let score = 0
+      for (let i = 1; i < arr.length; i++) {
+        if (arr[i] === arr[i - 1]) score += 1
+      }
+      return score
+    }
+
+    let bestShuffle = array
+    let lowestScore = Infinity
+
+    for (let attempt = 0; attempt < maxAttempts; attempt++) {
+      const newArray = [...array]
+      for (let i = newArray.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1))
+          ;[newArray[i], newArray[j]] = [newArray[j], newArray[i]]
+      }
+      const score = calculateProximityScore(newArray)
+      if (score < lowestScore) {
+        lowestScore = score
+        bestShuffle = newArray
+      }
+      if (score === 0) break // Shuffle perfeito (sem repetições adjacentes)
+    }
+
+    return bestShuffle
+  }
+
 
   // Initialize game
   const initGame = () => {
@@ -263,7 +292,8 @@ export default function MemoryGame() {
       return
     }
 
-    setCards(shuffle(symbols))
+    console.log("embaralha", shuffleBalanced(symbols))
+    setCards(shuffleBalanced(symbols))
     setOpened([])
     setMatched([])
     setWrongPair([])
@@ -350,14 +380,16 @@ export default function MemoryGame() {
   // Handle card click
   const handleCardClick = (index: number) => {
     console.log("🚀 ~ handleCardClick ~ index:", index)
-    if (
-      opened.length === 2 ||
-      matched.includes(index) ||
-      opened.includes(index) ||
-      wrongPair.includes(index) ||
-      !gameActive
-    )
+
+    // Only prevent clicks for already matched cards, currently opened cards, or inactive game
+    if (matched.includes(index) || opened.includes(index) || !gameActive) {
       return
+    }
+
+    // If we already have 2 cards open, don't allow more clicks until they're processed
+    if (opened.length >= 2) {
+      return
+    }
 
     playSound(playFlip)
 
@@ -370,31 +402,25 @@ export default function MemoryGame() {
       const [first, second] = newOpened
 
       if (cards[first] === cards[second]) {
-        // Par correto
+        // Correct pair - faster processing
         setTimeout(() => {
           playSound(playMatch)
           setMatched((prev) => [...prev, first, second])
           setOpened([])
-        }, 600)
+          setWrongPair([]) // Clear any wrong pair state
+        }, 500)
       } else {
-        // Par incorreto - sequência melhorada
-
-        // 1. Primeiro, deixa ver as cartas por 800ms
+        // Wrong pair - improved timing
         setTimeout(() => {
-          // 2. Marca como par errado para iniciar efeito de erro
           setWrongPair([first, second])
-        }, 800)
-
-        // 3. Toca som de erro após mostrar as cartas
-        setTimeout(() => {
           playSound(playNoMatch)
-        }, 1000)
+        }, 600)
 
-        // 4. Reset completo após efeito de erro
+        // Reset everything faster to keep game responsive
         setTimeout(() => {
           setWrongPair([])
           setOpened([])
-        }, 1800) // Tempo total: 800ms (ver cartas) + 800ms (efeito erro) + 200ms (buffer)
+        }, 1200)
       }
     }
   }
