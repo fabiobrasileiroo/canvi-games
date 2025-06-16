@@ -122,7 +122,7 @@ const GameRedirectPage: React.FC = () => {
           })}
         </div>
       <motion.div
-        className="flex justify-center -ml-6 mt-6 w-full max-w-[800px] relative z-10"
+        className="flex justify-center items-center mt-6 w-full max-w-[800px] relative z-10"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.4 }}
