@@ -94,7 +94,7 @@ const GameRedirectPage: React.FC = () => {
                     < Image
                       src={game.image}
                       alt={game.title}
-                      width={game.title !== "Jogo da Memória" ? 400 : 460}
+                      width={game.title !== "Jogo da Memória" ? 380 : 460}
                       height={400}
                       className="rounded"
                     />
