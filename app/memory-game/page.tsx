@@ -21,7 +21,7 @@ import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { useSound } from "@/hooks/use-sound"
 import { cn } from "@/lib/utils"
-import { Trophy } from "lucide-react"
+import { Trophy, X } from "lucide-react"
 
 // Componentes modulares
 import { ModeSelection } from "@/components/game/mode-selection"

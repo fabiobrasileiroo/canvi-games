@@ -24,7 +24,7 @@ export function MemoryCard({ symbol, index, isOpened, isMatched, isWrongPair, on
       // Delay para mostrar a carta primeiro, depois o erro
       const timer = setTimeout(() => {
         setShowErrorAnimation(true)
-      }, 800) // Tempo para ver o símbolo antes do efeito de erro
+      },100) // Tempo para ver o símbolo antes do efeito de erro
 
       return () => clearTimeout(timer)
     } else {
