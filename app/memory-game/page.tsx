@@ -74,8 +74,104 @@ interface DuelPlayer {
 
 // Random name generator
 const generateRandomName = () => {
-  const prefixes = ["Abacatinho", "Super", "Mega", "Ultra", "Ninja", "Mestre", "Canvi", "Estrela", "Foguete"]
-  const suffixes = ["Jogador", "Gamer", "Pro", "Master", "Campeão", "Veloz", "Memória"]
+  // const prefixes = ["Abacatinho", "Super", "Mega", "Ultra", "Ninja", "Mestre", "Canvi", "Estrela", "Foguete"]
+  // const suffixes = ["Jogador", "Gamer", "Pro", "Master", "Campeão", "Veloz", "Memória"]
+  const prefixes = [
+    "BoiBandido",
+    "CurralMaster",
+    "Garantilindo",
+    "CaprichosoLoko",
+    "CunhãNinja",
+    "BatucadaForte",
+    "PajéDoido",
+    "TouroVeloz",
+    "EstrelaFoguete",
+    "CapriDoido",
+    "GarantidoFamoso",
+    "VermelhãoZika",
+    "AzulzãoBrabo",
+    "BumbáRei",
+    "Amazonudo",
+    "CapriFã",
+    "Garantilover",
+    "LendaDoBoi"
+  ]
+
+  const suffixes = [
+    "do Garantido",
+    "do Caprichoso",
+    "Caçador de Caprichoso",
+    "Dançarino do Curral",
+    "Mito de Parintins",
+    "Rei do Festival",
+    "Puxador Oficial",
+    "Amo da Arena",
+    "Matador de Garantido",
+    "Campeão da Batucada",
+    "Brabo do Bumbódromo",
+    "Lenda do Festival",
+    "Pajé Supremo",
+    "Cunhã Estiloso",
+    "BoiRaiz"
+  ]
+
+  // const prefixes = [
+  //   "Abacatinho",
+  //   "Super",
+  //   "Mega",
+  //   "Ultra",
+  //   "Ninja",
+  //   "Mestre",
+  //   "Canvi",
+  //   "Estrela",
+  //   "Foguete",
+  //   "Bumbá",
+  //   "Vermelhão",
+  //   "Azulzão",
+  //   "Pajé",
+  //   "Cunhã",
+  //   "Toadinho",
+  //   "Curral",
+  //   "Lenda",
+  //   "Encantado",
+  //   "Tribo",
+  //   "Garantilindo",
+  //   "Caprichosoide",
+  //   "Batucada",
+  //   "Puxador",
+  //   "Garantilover",
+  //   "CapriFã",
+  //   "Porradeiro",
+  //   "Amazonudo",
+  //   "Caprilegend",
+  //   "Garantioso"
+  // ]
+
+  // const suffixes = [
+  //   "Jogador",
+  //   "Gamer",
+  //   "Pro",
+  //   "Master",
+  //   "Campeão",
+  //   "Veloz",
+  //   "Memória",
+  //   "do Garantido",
+  //   "do Caprichoso",
+  //   "do Curral",
+  //   "do Bumbódromo",
+  //   "Matador de Caprichoso",
+  //   "Rei da Batucada",
+  //   "Cunhã do Boi",
+  //   "Puxador Oficial",
+  //   "Campeão de Parintins",
+  //   "Amo do Festival",
+  //   "Mito do Garantido",
+  //   "Estrela do Caprichoso",
+  //   "Dono da Arena",
+  //   "Lenda de Parintins",
+  //   "Pajé Supremo",
+  //   "Mestre dos Bois"
+  // ]
   const randomNum = Math.floor(Math.random() * 1000)
 
   const prefix = prefixes[Math.floor(Math.random() * prefixes.length)]
@@ -98,7 +194,7 @@ export default function MemoryGame() {
   const [showModeSelect, setShowModeSelect] = useState(true)
   const [playerName, setPlayerName] = useState("")
   const [difficulty, setDifficulty] = useState<Difficulty>("medium")
-  const [timerMode, setTimerMode] = useState<TimerMode>("countdown")
+  const [timerMode, setTimerMode] = useState<TimerMode>("elapsed")
   const [wrongPair, setWrongPair] = useState<number[]>([])
   const [musicEnabled, setMusicEnabled] = useState(true)
   const [soundEnabled, setSoundEnabled] = useState(true)
@@ -131,7 +227,7 @@ export default function MemoryGame() {
     play: playMusic,
     stop: stopMusic,
     isPlaying: isMusicPlaying,
-  } = useSound("/sounds/background-music.mp3", true, 0.3)
+  } = useSound("/sounds/background-music.mp3", true, 0.1)
 
   const confettiRef = useRef<HTMLDivElement>(null)
 
@@ -253,6 +349,7 @@ export default function MemoryGame() {
 
   // Handle card click
   const handleCardClick = (index: number) => {
+    console.log("🚀 ~ handleCardClick ~ index:", index)
     if (
       opened.length === 2 ||
       matched.includes(index) ||
@@ -630,7 +727,7 @@ export default function MemoryGame() {
               }}
             >
               {/* Vitória do Boi {selectedTeam === "garantido" ? "Garantido" : "Caprichoso"}! */}
-              <Image src={"/assets/vc-completou.png"} width={500} height={500} alt="você ganhou"/>
+              <Image src={"/assets/vc-completou.png"} width={500} height={500} alt="você ganhou" />
             </motion.div>
           </motion.div>
         )}
@@ -872,12 +969,26 @@ export default function MemoryGame() {
                 Pontuação: <span className="font-bold">{calculateScore()} pontos</span>
               </div>
               <div className="mb-6 text-lg">Digite seu nome para o ranking ou use o nome gerado automaticamente.</div>
-              <Input
-                value={playerName}
-                onChange={(e) => setPlayerName(e.target.value)}
-                placeholder="Seu nome"
-                className="mb-4 text-lg p-3"
-              />
+
+              {/* Input com botão X */}
+              <div className="relative mb-4">
+                <Input
+                  value={playerName}
+                  onChange={(e) => setPlayerName(e.target.value)}
+                  placeholder="Seu nome"
+                  className="text-lg p-3 pr-10"
+                />
+                {playerName && (
+                  <button
+                    type="button"
+                    onClick={() => setPlayerName("")}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                  >
+                    <X size={20} />
+                  </button>
+                )}
+              </div>
+
               <Button
                 variant="outline"
                 size="lg"
@@ -888,6 +999,7 @@ export default function MemoryGame() {
               </Button>
             </AlertDialogDescription>
           </AlertDialogHeader>
+
           <AlertDialogFooter className="flex justify-between">
             <AlertDialogCancel
               className="text-lg px-6 py-3"
@@ -1023,7 +1135,7 @@ export default function MemoryGame() {
                       ) : duelPlayers[1]?.score > duelPlayers[0]?.score ? (
                         <div className="flex flex-col items-center">
                           {/* <span className="text-lg font-bold">Jogador 2</span> */}
-                           <Image
+                          <Image
                             src={"/assets/games/ganhador/jogador-2-ganhou.svg"}
                             width={400}
                             height={400}
