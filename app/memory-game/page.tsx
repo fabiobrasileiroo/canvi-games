@@ -76,45 +76,86 @@ interface DuelPlayer {
 const generateRandomName = () => {
   // const prefixes = ["Abacatinho", "Super", "Mega", "Ultra", "Ninja", "Mestre", "Canvi", "Estrela", "Foguete"]
   // const suffixes = ["Jogador", "Gamer", "Pro", "Master", "Campeão", "Veloz", "Memória"]
-  const prefixes = [
-    "BoiBandido",
-    "CurralMaster",
-    "Garantilindo",
-    "CaprichosoLoko",
-    "CunhãNinja",
-    "BatucadaForte",
-    "PajéDoido",
-    "TouroVeloz",
-    "EstrelaFoguete",
-    "CapriDoido",
-    "GarantidoFamoso",
-    "VermelhãoZika",
-    "AzulzãoBrabo",
-    "BumbáRei",
-    "Amazonudo",
-    "CapriFã",
-    "Garantilover",
-    "LendaDoBoi",
-  ]
+  // nomes tops
+  // const prefixes = [
+  //   "BoiBandido",
+  //   "CurralMaster",
+  //   "Garantilindo",
+  //   "CaprichosoLoko",
+  //   "CunhãNinja",
+  //   "BatucadaForte",
+  //   "PajéDoido",
+  //   "TouroVeloz",
+  //   "EstrelaFoguete",
+  //   "CapriDoido",
+  //   "GarantidoFamoso",
+  //   "VermelhãoZika",
+  //   "AzulzãoBrabo",
+  //   "BumbáRei",
+  //   "Amazonudo",
+  //   "CapriFã",
+  //   "Garantilover",
+  //   "LendaDoBoi",
+  // ]
 
-  const suffixes = [
-    "do Garantido",
-    "do Caprichoso",
-    "Caçador de Caprichoso",
-    "Dançarino do Curral",
-    "Mito de Parintins",
-    "Rei do Festival",
-    "Puxador Oficial",
-    "Amo da Arena",
-    "Matador de Garantido",
-    "Campeão da Batucada",
-    "Brabo do Bumbódromo",
-    "Lenda do Festival",
-    "Pajé Supremo",
-    "Cunhã Estiloso",
-    "BoiRaiz",
-  ]
+  // const suffixes = [
+  //   "do Garantido",
+  //   "do Caprichoso",
+  //   "Caçador de Caprichoso",
+  //   "Dançarino do Curral",
+  //   "Mito de Parintins",
+  //   "Rei do Festival",
+  //   "Puxador Oficial",
+  //   "Amo da Arena",
+  //   "Matador de Garantido",
+  //   "Campeão da Batucada",
+  //   "Brabo do Bumbódromo",
+  //   "Lenda do Festival",
+  //   "Pajé Supremo",
+  //   "Cunhã Estiloso",
+  //   "BoiRaiz",
+  // ]
+const prefixes = [
+  "BoiNerd",
+  "CapriZika",
+  "MatadorDeGarantido",
+  "CunhãTop",
+  "TouroWeb",
+  "PajéSoft",
+  "BumbáPro",
+  "ZebuDoido",
+  "TouroXP",
+  "CaçadorDeCaprichoso",
+]
 
+const suffixes = [
+  "do Zaplus",
+  "em Crise",
+  "da Arena",
+  "do Curral",
+  "em Beta",
+  "do Festival",
+  "sem Ritmo",
+  "com Delay",
+  "do Pix",
+  "do After",
+]
+
+const randomNum = Math.floor(Math.random() * 1000)
+const shouldCombine = Math.random() > 0.4 // 60% de chance de combinar
+
+let name: string
+
+if (shouldCombine) {
+  const prefix = prefixes[Math.floor(Math.random() * prefixes.length)]
+  const suffix = suffixes[Math.floor(Math.random() * suffixes.length)]
+  name = `${prefix} ${suffix}`
+} else {
+  const soloList = [...prefixes, ...suffixes]
+  name = soloList[Math.floor(Math.random() * soloList.length)]
+}
+
+return `${name} #${randomNum}`
   // const prefixes = [
   //   "Abacatinho",
   //   "Super",
@@ -172,12 +213,12 @@ const generateRandomName = () => {
   //   "Pajé Supremo",
   //   "Mestre dos Bois"
   // ]
-  const randomNum = Math.floor(Math.random() * 1000)
+  // const randomNum = Math.floor(Math.random() * 100)
 
-  const prefix = prefixes[Math.floor(Math.random() * prefixes.length)]
-  const suffix = suffixes[Math.floor(Math.random() * suffixes.length)]
+  // const prefix = prefixes[Math.floor(Math.random() * prefixes.length)]
+  // const suffix = suffixes[Math.floor(Math.random() * suffixes.length)]
 
-  return `${prefix}${suffix}${randomNum}`
+  // return `${prefix}${suffix}${randomNum}`
 }
 
 export default function MemoryGame() {
