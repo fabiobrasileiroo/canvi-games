@@ -141,7 +141,7 @@ const suffixes = [
   "do After",
 ]
 
-const randomNum = Math.floor(Math.random() * 1000)
+const randomNum = Math.floor(Math.random() * 100)
 const shouldCombine = Math.random() > 0.4 // 60% de chance de combinar
 
 let name: string
